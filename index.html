@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Unbeatable TicTacToe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="info">
+        <h1>Unbeatable TicTacToe</h1>
+        <hr />
+        <div class="lineup">
+          <div>
+            <h3>Player 1</h3>
+            <input type="radio" name="playerOne" value="human" checked="checked"> Human <br />
+            <input type="radio" name="playerOne" value="computer"> Computer
+          </div>
+          vs
+          <div>
+            <h3>Player 2</h3>
+            <input type="radio" name="playerTwo" value="human"> Human <br />
+            <input type="radio" name="playerTwo" value="computer" checked="checked"> Computer
+          </div>
+        </div>
+        <div class="whoStarts">
+          Who starts?
+          <input type="radio" name="startPlayer" value="p1" checked="checked"> p1
+          <input type="radio" name="startPlayer" value="p2"> p2
+        </div>
+
+        <button type="button" name="button" class="startGame"> Start Game </button>
+
+        <hr />
+      </div>
+
+      <div class="board">
+        <div class="gridSquare" id='1'></div>
+        <div class="gridSquare" id='2'></div>
+        <div class="gridSquare" id='3'></div>
+
+        <div class="gridSquare" id='4'></div>
+        <div class="gridSquare" id='5'></div>
+        <div class="gridSquare" id='6'></div>
+
+        <div class="gridSquare" id='7'></div>
+        <div class="gridSquare" id='8'></div>
+        <div class="gridSquare" id='9'></div>
+      </div>
+
+    </div>
+  </body>
+</html>

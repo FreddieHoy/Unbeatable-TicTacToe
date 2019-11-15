@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+body {
+  margin: 0;
+}
+.container {
+  width: 800px;
+  height: 500px;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  margin: 60px auto;
+  box-shadow: 0px 0px 15px 0px rgba(55,55,55,0.3)
+}
+.info{
+  text-align: center;
+}
+.lineup {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+.lineup > div {
+  text-align: left;
+}
+.whoStarts {
+  margin: 20px 0;
+}
+.startGame {
+  padding: 10px 50px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  border-left: 2px solid black;
+}
+.board > div {
+  height: calc(100% / 3);
+  width: calc(100% / 3);
+  border: 1px solid black;
+  padding: none;
+  margin: none;
+}
