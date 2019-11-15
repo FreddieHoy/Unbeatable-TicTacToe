@@ -24,8 +24,8 @@ const winningCombos = [
 ]
 
 
-let playerOne
-let playerTwo
+let playerOne = 'X'
+let playerTwo = 'O'
 let playerStart
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -60,15 +60,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startGame() {
     console.log(playerOne + playerTwo + playerStart)
-    // this function should remove everythign from the board
 
+    if(playerStart === 'p1') {
+      playerStart = playerOne
+    } else if (playerStart === 'p2') {
+      playerStart = playerTwo
+    }
+    console.log(playerStart)
     // should add eventListeners to each grid Square
     for(let i=0; i<gridSquares.length; i++) {
+      gridSquares[i].innerHTML = ''
       gridSquares[i].addEventListener('click', squareClick, false)
     }
   }
 
-  function squareClick(square) {
+  function squareClick(square, playerStart) {
+    square.target.innerHTML = playerStart
     console.log(square.target.id)
   }
 

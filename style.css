@@ -40,10 +40,11 @@ body {
   width: 500px;
   border-left: 2px solid black;
 }
-.board > div {
+.gridSquare {
   height: calc(100% / 3);
   width: calc(100% / 3);
   border: 1px solid black;
-  padding: none;
+  padding: 20px 40px;
   margin: none;
+  font-size: 100px;
 }
