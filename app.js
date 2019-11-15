@@ -26,7 +26,7 @@ const winningCombos = [
 
 let playerOne = 'X'
 let playerTwo = 'O'
-let playerStart
+let playerTurn
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   start.addEventListener('click', () => {
     for(let i=0; i < startPlayerRadios.length; i++) {
       if (startPlayerRadios[i].checked) {
-        playerStart = startPlayerRadios[i].value
+        playerTurn = startPlayerRadios[i].value
         break
       }
     }
@@ -59,14 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   function startGame() {
-    console.log(playerOne + playerTwo + playerStart)
+    console.log(playerOne + playerTwo + playerTurn)
 
-    if(playerStart === 'p1') {
-      playerStart = playerOne
-    } else if (playerStart === 'p2') {
-      playerStart = playerTwo
+    if(playerTurn === 'p1') {
+      playerTurn = 'X'
+    } else if (playerTurn === 'p2') {
+      playerTurn = 'O'
     }
-    console.log(playerStart)
+    console.log(playerTurn)
     // should add eventListeners to each grid Square
     for(let i=0; i<gridSquares.length; i++) {
       gridSquares[i].innerHTML = ''
@@ -74,14 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function squareClick(square, playerStart) {
-    square.target.innerHTML = playerStart
+  function squareClick(square) {
+    square.target.innerHTML = playerTurn
     console.log(square.target.id)
+    checkWin()
+    changeTurn()
   }
 
+  function changeTurn() {
+    if(playerTurn === 'O') {
+      playerTurn = 'X'
+    } else if (playerTurn === 'X') {
+      playerTurn = 'O'
+    }
 
+  }
 
+  function checkWin() {
 
+  }
 
 
 

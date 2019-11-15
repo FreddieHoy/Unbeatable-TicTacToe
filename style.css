@@ -44,7 +44,8 @@ body {
   height: calc(100% / 3);
   width: calc(100% / 3);
   border: 1px solid black;
-  padding: 20px 40px;
+  padding: 20px 0;
+  text-align: center;
   margin: none;
   font-size: 100px;
 }
