@@ -33,6 +33,7 @@ body {
   padding: 10px 50px;
   font-size: 16px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .board {
   display: flex;
@@ -48,4 +49,5 @@ body {
   text-align: center;
   margin: none;
   font-size: 100px;
+  cursor: pointer;
 }
