@@ -180,6 +180,7 @@ function minimax(newBoard, player) {
   // available spots
   const availSpots = avialableSquares(newBoard)
 
+  // is there a terminal position
   if (winning(newBoard, playerOneSymbol)) {
     return {score: -10}
   } else if (winning(newBoard, playerTwoSymbol)){
