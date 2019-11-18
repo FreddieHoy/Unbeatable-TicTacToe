@@ -40,3 +40,17 @@ describe('The computerClick() function', () => {
   })
 
 })
+
+describe('The getBoardState() function', () => {
+
+  it('should an array with length 9', () => {
+    expect(getBoardState()).to.have.length(9)
+  })
+
+  // it('should return the correct Array', () => {
+  //   expect(getBoardState([0, 1], [2, 8])).to.deep.eq(['X', 'X', 'O', 3, 4, 5, 6, 7, 'O'])
+  //   expect(getBoardState([0, 7, 8], [2, 3, 5])).to.deep.eq(['X', 1, 'O', 'O', 4, 'O', 6, 'X', 'X'])
+  //   expect(getBoardState([], [])).to.deep.eq([0, 1, 2, 3, 4, 5, 6, 7, 8])
+  // })
+
+})
