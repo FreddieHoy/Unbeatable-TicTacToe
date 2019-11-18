@@ -35,6 +35,12 @@ body {
   margin-bottom: 10px;
   cursor: pointer;
 }
+.infoBox {
+  border-top: 1px solid grey;
+  height: 164px;
+  padding: 50px 0;
+  font-size: 30px;
+}
 .board {
   display: flex;
   flex-wrap: wrap;

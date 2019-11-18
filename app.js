@@ -32,7 +32,7 @@ const pOneRadios = document.getElementsByName('playerOne')
 const pTwoRadios = document.getElementsByName('playerTwo')
 const startPlayerRadios = document.getElementsByName('startPlayer')
 const start = document.querySelector('.startGame')
-const infobox = document.querySelector('.infobox')
+const infobox = document.querySelector('.infoBox')
 const gridSquares = document.querySelectorAll('.gridSquare')
 
 start.addEventListener('click', () => {
@@ -63,6 +63,7 @@ function startGame() {
   playerTwoPositions = []
   // remove info from infobox
   infobox.innerHTML = ''
+  infobox.style.color = 'black'
   // clear the board
   for(let i=0; i<gridSquares.length; i++) {
     gridSquares[i].innerHTML = ''
@@ -291,8 +292,12 @@ function checkDraw() {
 
 function endGame(winner) {
   if(winner === 'Draw') {
-    infobox.innerHTML = 'It\'s a draw!'
+    infobox.innerHTML = 'It\'s a draw.'
+    infobox.style.color = 'grey'
   } else {
     infobox.innerHTML = `${winner} has won!`
+    infobox.style.color = 'green'
   }
+  start.innerHTML = 'Re-start Game'
+
 }
