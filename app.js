@@ -78,13 +78,13 @@ function turn() {
     if(playerOneType === 'human') {
       humanChoice()
     } else if(playerOneType === 'computer') {
-      computerTakeSquare(playerOneSymbol)
+      computerChoice(playerOneSymbol)
     }
   } else if(playerTurn === 'p2') {
     if(playerTwoType === 'human') {
       humanChoice()
     } else if(playerTwoType === 'computer') {
-      computerTakeSquare(playerTwoSymbol)
+      computerChoice(playerTwoSymbol)
     }
   }
 }
@@ -116,6 +116,43 @@ function humanTakeSquare() {
   turnResult()
 }
 
+function computerChoice(player) {
+  if(playerOnePositions.length + playerTwoPositions.length < 2) {
+    compFirstMove(player)
+  } else {
+    boardState = getBoardState()
+    console.log(boardState)
+    console.log(player)
+
+    const bestMove = (minimax(boardState, player)).index
+    console.log(JSON.stringify(bestMove))
+
+    gridSquares[bestMove].innerHTML = player
+    if(player === 'X') {
+      playerOnePositions.push(bestMove)
+    } else if(player === 'O') {
+      playerTwoPositions.push(bestMove)
+    }
+  }
+  turnResult()
+}
+
+function compFirstMove(player) {
+  let firstMove
+  if(gridSquares[4].innerHTML === '') {
+    gridSquares[4].innerHTML = player
+    firstMove = 4
+  } else if(gridSquares[0].innerHTML === '') {
+    gridSquares[0].innerHTML = player
+    firstMove = 0
+  }
+  if(player === 'X') {
+    playerOnePositions.push(firstMove)
+  } else if(player === 'O') {
+    playerTwoPositions.push(firstMove)
+  }
+}
+
 // -------------------------------- Computer Logic ----------
 function getBoardState() {
   // takes in these two array with diffrent numbers between 0-8
@@ -129,97 +166,74 @@ function getBoardState() {
       boardState.push(i)
     }
   }
-  console.log(boardState)
   return boardState
   // returns array
 }
 
-// takes in boardState and computer Symbol
-function minimax(boardStatePositions, player) {
-  // take array of all the previous player posotions and opponent player positions and choose the best square
-  let opponentSymbol
-  let computerSymbol
-  if(player === 'X') {
-    computerSymbol === 'X'
-    opponentSymbol === 'O'
-  } else if(player === 'O') {
-    computerSymbol === 'O'
-    opponentSymbol === 'X'
-  }
+function minimax(newBoard, player) {
 
-  const avSquares = avialableSquares(boardStatePositions)
-  let score
-  if(winning(boardStatePositions, opponentSymbol)) {
-    score = -10
-  } else if(winning(boardStatePositions, computerSymbol)) {
-    score = 10
-  } else if(avSquares.length === 0) {
-    score = 0
+  // available spots
+  const availSpots = avialableSquares(newBoard)
+  if (winning(newBoard, playerOneSymbol)) {
+    return {score: -10}
+  } else if (winning(newBoard, playerTwoSymbol)){
+    return {score: 10}
+  } else if (availSpots.length === 0){
+    return {score: 0}
   }
 
   const moves = []
-  for(let i = 0; i < avSquares.length; i++) {
+  // loop through available spots
+  for (let i = 0; i < availSpots.length; i++){
     const move = {}
-    move.index = boardStatePositions[avSquares[i]]
-    boardStatePositions[avSquares[i]] = computerSymbol
+    move.index = newBoard[availSpots[i]]
+    newBoard[availSpots[i]] = player
 
-    if(player === computerSymbol) {
-      const result = minimax(boardStatePositions, opponentSymbol)
+    if (player === playerTwoSymbol){
+      const result = minimax(newBoard, playerOneSymbol)
       move.score = result.score
     } else {
-      const result = minimax(boardStatePositions, computerSymbol)
-      move.score= result.score
+      const result = minimax(newBoard, playerTwoSymbol)
+      move.score = result.score
     }
-    boardStatePositions[avSquares[i]] = move.index
+    newBoard[availSpots[i]] = move.index
     moves.push(move)
   }
-
   let bestMove
-  if(player === computerSymbol) {
-    let bestScore = -1000
-    for(let i = 0; i < moves.lenght; i++) {
-      if(moves[i].score > bestScore) {
+  if(player === playerTwoSymbol){
+    let bestScore = -10000
+    for(let i = 0; i < moves.length; i++){
+      if(moves[i].score > bestScore){
         bestScore = moves[i].score
         bestMove = i
       }
     }
   } else {
-    let bestScore = 1000
-    for(let i = 0; i < moves.lenght; i++) {
-      if(moves[i].score < bestScore) {
+    let bestScore = 10000
+    for(let i = 0; i < moves.length; i++){
+      if(moves[i].score < bestScore){
         bestScore = moves[i].score
         bestMove = i
       }
     }
   }
-  console.log(bestMove)
-  return bestMove
-  // return the best square possible
+  return moves[bestMove]
 }
 
 function avialableSquares(boardState) {
-  const freePositions = []
-  for(let i = 0; i< boardState.length; i++ ) {
-    if(boardState[i] !== 'X' && boardState[i] !== 'O') {
-      freePositions.push(boardState[i])
-    } else {
-      continue
-    }
-  }
-  // console.log(freePositions)
-  return freePositions
+  return boardState.filter(s => s !== 'O' && s !== 'X')
 }
 
-function winning(board, compSymbol) {
+function winning(board, symbol) {
   if(
-    (board[0] === compSymbol && board[1] === compSymbol && board[2] === compSymbol) ||
-    (board[3] === compSymbol && board[4] === compSymbol && board[5] === compSymbol) ||
-    (board[6] === compSymbol && board[7] === compSymbol && board[8] === compSymbol) ||
-    (board[0] === compSymbol && board[3] === compSymbol && board[6] === compSymbol) ||
-    (board[1] === compSymbol && board[4] === compSymbol && board[7] === compSymbol) ||
-    (board[2] === compSymbol && board[5] === compSymbol && board[8] === compSymbol) ||
-    (board[0] === compSymbol && board[4] === compSymbol && board[8] === compSymbol) ||
-    (board[2] === compSymbol && board[4] === compSymbol && board[6] === compSymbol)
+    (board[0] === symbol && board[1] === symbol && board[2] === symbol) ||
+    (board[3] === symbol && board[4] === symbol && board[5] === symbol) ||
+    (board[6] === symbol && board[7] === symbol && board[8] === symbol) ||
+    (board[0] === symbol && board[3] === symbol && board[6] === symbol) ||
+    (board[1] === symbol && board[4] === symbol && board[7] === symbol) ||
+    (board[2] === symbol && board[5] === symbol && board[8] === symbol) ||
+    (board[0] === symbol && board[4] === symbol && board[8] === symbol) ||
+    (board[2] === symbol && board[4] === symbol && board[6] === symbol)
   ) {
     return true
   } else {
@@ -228,22 +242,6 @@ function winning(board, compSymbol) {
 }
 
 // ------------------------------------------------------------------
-
-function computerTakeSquare(player) {
-  boardState = getBoardState()
-  console.log(boardState)
-
-  const bestMove = minimax(boardState, player)
-
-  gridSquares[bestMove].innerHTML = player
-  if(player === 'X') {
-    playerOnePositions.push(bestMove)
-  } else if(player === 'O') {
-    playerTwoPositions.push(bestMove)
-  }
-  turnResult()
-}
-
 
 function turnResult() {
   // Was the boxcheck a winning check?
