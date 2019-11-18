@@ -122,11 +122,8 @@ function computerChoice(player) {
     compFirstMove(player)
   } else {
     boardState = getBoardState()
-    console.log(boardState)
-    console.log(player)
 
     const bestMove = (minimax(boardState, player)).index
-    console.log(JSON.stringify(bestMove))
 
     gridSquares[bestMove].innerHTML = player
     if(player === 'X') {
