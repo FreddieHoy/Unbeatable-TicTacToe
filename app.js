@@ -90,6 +90,8 @@ function turn() {
   }
 }
 
+// ---- Human box choosing logic
+
 function humanChoice() {
   for(let i=0; i<gridSquares.length; i++) {
     if(gridSquares[i].innerHTML === '') {
@@ -117,14 +119,16 @@ function humanTakeSquare() {
   turnResult()
 }
 
+// ---- Computer box choosing logic
+
 function computerChoice(player) {
+  // First move is decided for the computer
   if(playerOnePositions.length + playerTwoPositions.length < 2) {
     compFirstMove(player)
   } else {
+    // minimax algorthium is then used.
     boardState = getBoardState()
-
     const bestMove = (minimax(boardState, player)).index
-
     gridSquares[bestMove].innerHTML = player
     if(player === 'X') {
       playerOnePositions.push(bestMove)
@@ -136,6 +140,7 @@ function computerChoice(player) {
 }
 
 function compFirstMove(player) {
+  // comp takes 4 if human hasen't, next best is 0
   let firstMove
   if(gridSquares[4].innerHTML === '') {
     gridSquares[4].innerHTML = player
@@ -144,6 +149,7 @@ function compFirstMove(player) {
     gridSquares[0].innerHTML = player
     firstMove = 0
   }
+  // adding to the position history
   if(player === 'X') {
     playerOnePositions.push(firstMove)
   } else if(player === 'O') {
@@ -151,7 +157,6 @@ function compFirstMove(player) {
   }
 }
 
-// -------------------------------- Computer Logic ----------
 function getBoardState() {
   // takes in these two array with diffrent numbers between 0-8
   const boardState = []
@@ -169,9 +174,12 @@ function getBoardState() {
 }
 
 function minimax(newBoard, player) {
-
+  if(player === '') {
+    return {score: 0}
+  }
   // available spots
   const availSpots = avialableSquares(newBoard)
+
   if (winning(newBoard, playerOneSymbol)) {
     return {score: -10}
   } else if (winning(newBoard, playerTwoSymbol)){
@@ -179,14 +187,13 @@ function minimax(newBoard, player) {
   } else if (availSpots.length === 0){
     return {score: 0}
   }
-
+  // array for all possible moves
   const moves = []
   // loop through available spots
-  for (let i = 0; i < availSpots.length; i++){
+  for (let i = 0; i < availSpots.length; i++) {
     const move = {}
     move.index = newBoard[availSpots[i]]
     newBoard[availSpots[i]] = player
-
     if (player === playerTwoSymbol){
       const result = minimax(newBoard, playerOneSymbol)
       move.score = result.score
@@ -239,7 +246,7 @@ function winning(board, symbol) {
   }
 }
 
-// ------------------------------------------------------------------
+// ---- Outcome of Move logic
 
 function turnResult() {
   // Was the boxcheck a winning check?
