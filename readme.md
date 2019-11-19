@@ -2,6 +2,8 @@
 
 # Unbeatable TicTacToe
 
+[Unbeatable-TicTacToe](https://freddiehoy.github.io/Unbeatable-TicTacToe/)
+
 This game was made as part of a code test. It solves the common problem of creating an unbeatable TicTacToe using the minimax algorithm.
 
 ## Brief
