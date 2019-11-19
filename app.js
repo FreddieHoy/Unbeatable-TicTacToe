@@ -109,19 +109,21 @@ function humanTakeSquare() {
 // ---- Computer box choosing logic
 
 function computerChoice(player) {
-  // First move is decided for the computer
+  let bestMove
+  // bestMove is decided for the computer.
+  // if less then two moves on the board its chosen by compFirstMove().
   if(playerOnePositions.length + playerTwoPositions.length < 2) {
-    compFirstMove(player)
+    bestMove = compFirstMove(player)
   } else {
-    // minimax algorthium is then used.
+    // otherwise minimax algorthium is then used to choose bestMove.
     boardState = getBoardState()
-    const bestMove = (minimax(boardState, player)).index
-    gridSquares[bestMove].innerHTML = player
-    if(player === 'X') {
-      playerOnePositions.push(bestMove)
-    } else if(player === 'O') {
-      playerTwoPositions.push(bestMove)
-    }
+    bestMove = (minimax(boardState, player)).index
+  }
+  gridSquares[bestMove].innerHTML = player
+  if(player === 'X') {
+    playerOnePositions.push(bestMove)
+  } else if(player === 'O') {
+    playerTwoPositions.push(bestMove)
   }
   turnResult()
 }
@@ -136,12 +138,7 @@ function compFirstMove(player) {
     gridSquares[0].innerHTML = player
     firstMove = 0
   }
-  // adding to the position history
-  if(player === 'X') {
-    playerOnePositions.push(firstMove)
-  } else if(player === 'O') {
-    playerTwoPositions.push(firstMove)
-  }
+  return firstMove
 }
 
 function getBoardState() {
