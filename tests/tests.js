@@ -32,7 +32,6 @@ describe('The minimax() recursive function', () => {
     expect(minimax(['X', 'X', 2, 'O', 'O', 5, 6, 7, 8], '')).to.deep.eq({score: 0})
     expect(minimax([], 'X')).to.deep.eq({score: 0})
   })
-
 })
 
 describe('The availableSquares() function', () => {
@@ -57,7 +56,6 @@ describe('The winning() function', () => {
     expect(winning(['X', 'X', 'X', 3, 'O', 'O', 6, 7, 8], 'O')).to.be.false
     expect(winning(['X', 'X', 'X', 3, 'O', 'O', 6, 7, 8], 'X')).to.be.true
   })
-
 })
 
 // ---- Testing for results logic

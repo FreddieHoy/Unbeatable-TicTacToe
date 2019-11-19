@@ -1,10 +1,3 @@
-
-// Decide
-// Human v Human
-// Human v Comp
-// comp v comp
-// who starts?
-
 const winningCombos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -19,13 +12,15 @@ const winningCombos = [
 // Human or Computer
 let playerOneType
 let playerTwoType
-
+// Old saved positions
 let playerOnePositions = []
 let playerTwoPositions = []
-
+// player one always has 'X' & Two 'O'
 const playerOneSymbol = 'X'
 const playerTwoSymbol = 'O'
+// Whos Turn
 let playerTurn
+// What the board currently looks like (array)
 let boardState
 
 const pOneRadios = document.getElementsByName('playerOne')
@@ -75,18 +70,10 @@ function startGame() {
 function turn() {
 
   // whos turn is it? Are they Human or computer
-  if(playerTurn === 'p1') {
-    if(playerOneType === 'human') {
-      humanChoice()
-    } else if(playerOneType === 'computer') {
-      computerChoice(playerOneSymbol)
-    }
-  } else if(playerTurn === 'p2') {
-    if(playerTwoType === 'human') {
-      humanChoice()
-    } else if(playerTwoType === 'computer') {
-      computerChoice(playerTwoSymbol)
-    }
+  if((playerTurn === 'X' && playerOneType === 'human') || (playerTurn === 'O' && playerTwoType === 'human')) {
+    humanChoice()
+  } else if((playerTurn === 'X' && playerOneType === 'computer') || (playerTurn === 'O' && playerTwoType === 'computer')) {
+    computerChoice(playerTurn)
   }
 }
 
@@ -103,10 +90,10 @@ function humanChoice() {
 function humanTakeSquare() {
   let playerPositions
   let playerSymbol
-  if(playerTurn === 'p1') {
+  if(playerTurn === 'X') {
     playerPositions = playerOnePositions
     playerSymbol = playerOneSymbol
-  } else if(playerTurn === 'p2') {
+  } else if(playerTurn === 'O') {
     playerPositions = playerTwoPositions
     playerSymbol = playerTwoSymbol
   }
@@ -231,27 +218,35 @@ function avialableSquares(boardState) {
 }
 
 function winning(board, symbol) {
-  if(
-    (board[0] === symbol && board[1] === symbol && board[2] === symbol) ||
-    (board[3] === symbol && board[4] === symbol && board[5] === symbol) ||
-    (board[6] === symbol && board[7] === symbol && board[8] === symbol) ||
-    (board[0] === symbol && board[3] === symbol && board[6] === symbol) ||
-    (board[1] === symbol && board[4] === symbol && board[7] === symbol) ||
-    (board[2] === symbol && board[5] === symbol && board[8] === symbol) ||
-    (board[0] === symbol && board[4] === symbol && board[8] === symbol) ||
-    (board[2] === symbol && board[4] === symbol && board[6] === symbol)
-  ) {
-    return true
-  } else {
-    return false
+
+  const symbolIndexs = []
+  let i = -1
+  while(( i = board.indexOf(symbol, i+1)) !== -1) {
+    symbolIndexs.push(i)
   }
+  // This code below is the same as checkWin()
+  // however calling checkWin() here leeds to computational limits.
+  for(let i = 0; i< winningCombos.length; i++) {
+    if(winningCombos[i].every(v => symbolIndexs.includes(v))) {
+      return true
+    } else {
+      continue
+    }
+  }
+  return false
 }
 
 // ---- Outcome of Move logic
 
 function turnResult() {
-  // Was the boxcheck a winning check?
-  // yes - endgame
+
+  // swap player turns
+  if(playerTurn === 'X') {
+    playerTurn = 'O'
+  } else if(playerTurn === 'O') {
+    playerTurn = 'X'
+  }
+  // check the result
   if(checkWin(playerOnePositions)) {
     endGame('Player One')
   } else if(checkWin(playerTwoPositions)) {
@@ -259,12 +254,6 @@ function turnResult() {
   } else if(checkDraw()) {
     endGame('Draw')
   } else {
-    // no - change turn
-    if(playerTurn === 'p1') {
-      playerTurn = 'p2'
-    } else if(playerTurn === 'p2') {
-      playerTurn = 'p1'
-    }
     turn()
   }
 }
