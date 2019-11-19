@@ -73,13 +73,14 @@ Although limited. I am VERY keen to learn more about how to implement TDD and  m
 
 ## Wins and Blockers
 
-##### BIG WINS
+
+##### Big Wins
 
 - Getting basic human v human game working.
 - Completing the minimax function.
 - Successfully using TDD if only for a handful of functions.
 
-##### BLOCKERS
+##### Blockers
 
 - Creating the minimax function without following the tutorial.
 - Testing interactions with the DOM using Chai.
