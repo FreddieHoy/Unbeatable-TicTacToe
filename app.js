@@ -119,6 +119,7 @@ function computerChoice(player) {
     boardState = getBoardState()
     bestMove = (minimax(boardState, player)).index
   }
+  // move is then made from bestChoice
   gridSquares[bestMove].innerHTML = player
   if(player === 'X') {
     playerOnePositions.push(bestMove)
